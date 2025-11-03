@@ -10,10 +10,10 @@ import numpy as np
 import torch
 import yaml
 from torch import nn
+import joblib
 
 from data_preparation import load_and_preprocess_data
 from model import CarPriceMLP
-import joblib
 
 
 def setup_logging(log_dir, level="INFO"):
