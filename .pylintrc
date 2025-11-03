@@ -1,0 +1,7 @@
+# .pylintrc
+[FORMAT]
+good-names=i,j,k,x,X,y,Y,df,id
+
+[MORE]
+# отключить слишком строгие правила при необходимости
+disable=too-few-public-methods,too-many-locals

@@ -55,6 +55,7 @@ def train(config_path, verbose=False):
     np.random.seed(config["training"]["random_seed"])
 
     # --- Data Loading ---
+    # pylint: disable=invalid-name
     X_train, X_test, y_train, y_test, preprocessor = load_and_preprocess_data(config)
     input_dim = X_train.shape[1]
 
