@@ -48,8 +48,6 @@ def load_and_preprocess_data(config):
     X_processed = preprocessor.fit_transform(X)
     logger.info("Processed feature matrix shape: %s", X_processed.shape)
 
-    config["training"]["test_size"] + config["training"]["val_size"]
-
     # train-deffered split
     deferred_size = config["training"]["test_size"] + config["training"]["val_size"]
     X_train, X_test, y_train, y_test = train_test_split(
@@ -66,6 +64,11 @@ def load_and_preprocess_data(config):
         random_state=config["training"]["random_seed"],
     )
 
-    logger.info("Train shape: %s, Val shape: %s, Test shape: %s", X_train.shape, X_val.shape, X_test.shape)
+    logger.info(
+        "Train shape: %s, Val shape: %s, Test shape: %s", 
+        X_train.shape, 
+        X_val.shape, 
+        X_test.shape
+    )
 
     return X_train, X_val, X_test, y_train, y_val, y_test, preprocessor
