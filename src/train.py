@@ -56,13 +56,15 @@ def train(config_path, verbose=False):
 
     # --- Data Loading ---
     # pylint: disable=invalid-name
-    X_train, X_test, y_train, y_test, preprocessor = load_and_preprocess_data(config)
+    X_train, X_val, X_test, y_train, y_val, y_test, preprocessor = load_and_preprocess_data(config)
     input_dim = X_train.shape[1]
 
     # --- Convert to Tensors ---
     device = torch.device(config["training"]["device"])
     X_train_t = torch.tensor(X_train, dtype=torch.float32, device=device)
     y_train_t = torch.tensor(y_train, dtype=torch.float32, device=device)
+    X_val_t = torch.tensor(X_val, dtype=torch.float32, device=device)
+    y_val_t = torch.tensor(y_val, dtype=torch.float32, device=device)
     X_test_t = torch.tensor(X_test, dtype=torch.float32, device=device)
     y_test_t = torch.tensor(y_test, dtype=torch.float32, device=device)
 
@@ -88,11 +90,19 @@ def train(config_path, verbose=False):
         optimizer.step()
 
         if verbose and (epoch + 1) % 10 == 0:
+            model.eval()
+            with torch.no_grad():
+                val_preds = model(X_val_t)
+                val_mse = criterion(val_preds, y_val_t)
+                val_rmse = torch.sqrt(val_mse).item()
+            
             logger.info(
-                "Epoch [%d/%d], Loss: %.4f",
+                "Epoch [%d/%d], Train Loss: %.4f, Train RMSE: %.4f, Val RMSE: %.4f,",
                 epoch + 1,
                 config["training"]["epochs"],
                 loss.item(),
+                loss.item() ** 0.5,
+                val_rmse
             )
 
     # --- Evaluation ---
@@ -102,7 +112,7 @@ def train(config_path, verbose=False):
         test_mse = criterion(test_preds, y_test_t)
         test_rmse = torch.sqrt(test_mse).item()
         mae = torch.mean(torch.abs(test_preds - y_test_t)).item()
-    logger.info("Test RMSE: %.4f, MAE: %.4f", test_rmse, mae)
+    logger.info("Test RMSE: %.4f, Test MAE: %.4f", test_rmse, mae)
 
     # --- Save Artifacts ---
     model_path = Path(config["output"]["model_dir"])

@@ -1,0 +1,35 @@
+data:
+  features:
+    categorical:
+    - fuel
+    - seller_type
+    - transmission
+    - owner
+    numeric:
+    - year
+    - km_driven
+  path: data/car_data.csv
+  target_column: selling_price
+logging:
+  level: INFO
+  log_dir: logs/
+model:
+  dropout: 0.05
+  hidden_sizes:
+  - 128
+  - 512
+  - 512
+  - 128
+  - 64
+  - 32
+  output_dim: 1
+output:
+  model_dir: models/car_price_model
+training:
+  batch_size: 32
+  device: cpu
+  epochs: 1000
+  learning_rate: 0.001
+  random_seed: 42
+  test_size: 0.15
+  val_size: 0.15

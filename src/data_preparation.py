@@ -29,8 +29,8 @@ def load_and_preprocess_data(config):
     # Feature engineering
     df = df.copy()
     current_year = 2025
-    df["Car_Age"] = current_year - df["Year"]
-    numeric_features = config["data"]["features"]["numeric"] + ["Car_Age"]
+    df["car_age"] = current_year - df["year"]
+    numeric_features = config["data"]["features"]["numeric"] + ["car_age"]
     categorical_features = config["data"]["features"]["categorical"]
 
     # Separate target
@@ -48,12 +48,24 @@ def load_and_preprocess_data(config):
     X_processed = preprocessor.fit_transform(X)
     logger.info("Processed feature matrix shape: %s", X_processed.shape)
 
-    # Train-test split
+    config["training"]["test_size"] + config["training"]["val_size"]
+
+    # train-deffered split
+    deferred_size = config["training"]["test_size"] + config["training"]["val_size"]
     X_train, X_test, y_train, y_test = train_test_split(
         X_processed,
         target,
-        test_size=config["training"]["test_size"],
+        test_size=deferred_size,
+        random_state=config["training"]["random_seed"],
+    )
+    # val-test split
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_test,
+        y_test,
+        test_size=config["training"]["test_size"]/deferred_size,
         random_state=config["training"]["random_seed"],
     )
 
-    return X_train, X_test, y_train, y_test, preprocessor
+    logger.info("Train shape: %s, Val shape: %s, Test shape: %s", X_train.shape, X_val.shape, X_test.shape)
+
+    return X_train, X_val, X_test, y_train, y_val, y_test, preprocessor
