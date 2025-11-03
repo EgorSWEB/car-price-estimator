@@ -65,9 +65,9 @@ def load_and_preprocess_data(config):
     )
 
     logger.info(
-        "Train shape: %s, Val shape: %s, Test shape: %s", 
-        X_train.shape, 
-        X_val.shape, 
+        "Train shape: %s, Val shape: %s, Test shape: %s",
+        X_train.shape,
+        X_val.shape,
         X_test.shape
     )
 

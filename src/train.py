@@ -13,7 +13,7 @@ from torch import nn
 import joblib
 
 from data_preparation import load_and_preprocess_data
-from model import CarPriceMLP
+from model import CarPriceMLP, CarPriceMLPConfig
 
 
 def setup_logging(log_dir, level="INFO"):
@@ -69,12 +69,14 @@ def train(config_path, verbose=False):
     y_test_t = torch.tensor(y_test, dtype=torch.float32, device=device)
 
     # --- Model, Optimizer, Loss ---
-    model = CarPriceMLP(
+    model_config = CarPriceMLPConfig(
         input_dim=input_dim,
         hidden_sizes=config["model"]["hidden_sizes"],
         output_dim=config["model"]["output_dim"],
-        dropout=config["model"]["dropout"],
-    ).to(device)
+        dropout=config["model"]["dropout"]
+    )
+
+    model = CarPriceMLP(model_config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["training"]["learning_rate"])
     criterion = nn.MSELoss()
@@ -84,7 +86,7 @@ def train(config_path, verbose=False):
     for epoch in range(config["training"]["epochs"]):
         model.train()
         optimizer.zero_grad()
-        outputs = model(X_train_t)
+        outputs = model(X_train_t)['logits']
         loss = criterion(outputs, y_train_t)
         loss.backward()
         optimizer.step()
@@ -92,7 +94,7 @@ def train(config_path, verbose=False):
         if verbose and (epoch + 1) % 10 == 0:
             model.eval()
             with torch.no_grad():
-                val_preds = model(X_val_t)
+                val_preds = model(X_val_t)['logits']
                 val_mse = criterion(val_preds, y_val_t)
                 val_rmse = torch.sqrt(val_mse).item()
             
@@ -108,7 +110,7 @@ def train(config_path, verbose=False):
     # --- Evaluation ---
     model.eval()
     with torch.no_grad():
-        test_preds = model(X_test_t)
+        test_preds = model(X_test_t)['logits']
         test_mse = criterion(test_preds, y_test_t)
         test_rmse = torch.sqrt(test_mse).item()
         mae = torch.mean(torch.abs(test_preds - y_test_t)).item()
@@ -119,7 +121,7 @@ def train(config_path, verbose=False):
     model_path.mkdir(parents=True, exist_ok=True)
 
     # Save model state dict and config
-    torch.save(model.state_dict(), model_path / "pytorch_model.bin")
+    model.save_pretrained(config["output"]["model_dir"])
     with open(model_path / "config.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f)
     # Save preprocessor

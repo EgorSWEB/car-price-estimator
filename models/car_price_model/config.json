@@ -1,0 +1,19 @@
+{
+  "architectures": [
+    "CarPriceMLP"
+  ],
+  "dropout": 0.05,
+  "dtype": "float32",
+  "hidden_sizes": [
+    128,
+    512,
+    512,
+    128,
+    64,
+    32
+  ],
+  "input_dim": 18,
+  "model_type": "car_price_mlp",
+  "output_dim": 1,
+  "transformers_version": "4.57.1"
+}
