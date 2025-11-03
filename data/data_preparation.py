@@ -1,18 +1,31 @@
-# src/data_preparation.py
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
+"""
+Module for loading and preprocessing the car price dataset.
+"""
 import logging
-import os
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 
 def load_and_preprocess_data(config):
+    """
+    Loads and preprocesses the car dataset.
+
+    Args:
+        config (dict): Configuration dictionary.
+
+    Returns:
+        tuple: Processed train/test splits and the fitted preprocessor.
+    """
     logger = logging.getLogger(__name__)
-    logger.info(f"Loading data from {config['data']['path']}")
-    
+    logger.info("Loading data from %s", config["data"]["path"])
+
     df = pd.read_csv(config["data"]["path"])
-    logger.info(f"Dataset shape: {df.shape}")
+    logger.info("Dataset shape: %s", df.shape)
 
     # Feature engineering
     df = df.copy()
@@ -34,13 +47,14 @@ def load_and_preprocess_data(config):
     )
 
     X_processed = preprocessor.fit_transform(X)
-    logger.info(f"Processed feature matrix shape: {X_processed.shape}")
+    logger.info("Processed feature matrix shape: %s", X_processed.shape)
 
     # Train-test split
     X_train, X_test, y_train, y_test = train_test_split(
-        X_processed, target,
+        X_processed,
+        target,
         test_size=config["training"]["test_size"],
-        random_state=config["training"]["random_seed"]
+        random_state=config["training"]["random_seed"],
     )
 
     return X_train, X_test, y_train, y_test, preprocessor
