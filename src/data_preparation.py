@@ -2,6 +2,7 @@
 Module for loading and preprocessing the car price dataset.
 """
 import logging
+from pathlib import Path
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -17,6 +18,7 @@ from src.config_loader import (
     get_data_schema
 )
 from src.preprocessor import create_preprocessor, add_car_age
+from src.data_profiler import profile_data
 
 def load_and_preprocess_data(config):
     """
@@ -40,6 +42,11 @@ def load_and_preprocess_data(config):
     validate_target(df, config["data"]["target_column"])
 
     logger.info("Dataset shape: %s", df.shape)
+
+    # Generate statistics
+    profile_path = Path(config["output"]["model_dir"]) / "data_profile.json"
+    profile_data(df.copy(), str(profile_path))
+    logger.info("Data profile saved to %s", profile_path)
 
     # Feature engineering
     df = add_car_age(df, 2025)
