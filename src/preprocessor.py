@@ -1,10 +1,13 @@
-import pandas as pd
+"""
+Module for creating a preprocessor and feature engineering.
+"""
 from typing import List
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 def create_preprocessor(
-        numeric_features: List[str], 
+        numeric_features: List[str],
         categorical_features: List[str]
     ) -> ColumnTransformer:
     """_summary_

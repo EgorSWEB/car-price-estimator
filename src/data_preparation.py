@@ -6,13 +6,13 @@ import logging
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from data_loader import load_csv
-from data_validator import (
+from src.data_loader import load_csv
+from src.data_validator import (
     validate_columns,
     validate_types,
     validate_target
 )
-from preprocessor import create_preprocessor, add_car_age
+from src.preprocessor import create_preprocessor, add_car_age
 
 def load_and_preprocess_data(config):
     """

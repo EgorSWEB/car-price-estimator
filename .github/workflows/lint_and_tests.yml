@@ -34,6 +34,6 @@ jobs:
       run: pylint --rcfile=.pylintrc src/ data/
 
     - name: Run unit tests
-      run: pytest tests/ -v
+      run: python -m pytest tests/ -v
       # run: |
       #   pylint $(git ls-files '*.py')

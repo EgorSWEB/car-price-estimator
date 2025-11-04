@@ -31,9 +31,8 @@ def validate_types(df: pd.DataFrame, schema: dict):
     for col, expected_type in schema.items():
         if col not in df.columns:
             continue
-        if (not pd.api.types.is_numeric_dtype(df[col]) and 
-            (expected_type == "numeric" or
-             expected_type == "non_negative")):
+        if (not pd.api.types.is_numeric_dtype(df[col]) and
+            (expected_type in {"numeric", "non_negative"})):
             raise TypeError(f"Column {col} must be numeric")
         if expected_type == "non_negative" and (df[col] < 0).any():
             raise ValueError(f"Column {col} must be non-negative")

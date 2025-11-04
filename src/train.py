@@ -12,9 +12,8 @@ import yaml
 from torch import nn
 import joblib
 
-from data_preparation import load_and_preprocess_data
-
-from model import CarPriceMLP, CarPriceMLPConfig
+from src.data_preparation import load_and_preprocess_data
+from src.model import CarPriceMLP, CarPriceMLPConfig
 
 
 def setup_logging(log_dir: str, level: str = "INFO"):

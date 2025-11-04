@@ -4849,3 +4849,37 @@
 2025-11-04 12:49:43,064 [INFO] model: Creating model with input_dim=10, hidden_sizes=None
 2025-11-04 12:49:43,067 [INFO] model: Creating model with input_dim=10, hidden_sizes=None
 2025-11-04 12:49:43,092 [INFO] __main__: Model saved to models\car_price_model
+2025-11-04 13:24:52,509 [INFO] __main__: Starting training pipeline
+2025-11-04 13:24:52,511 [INFO] data_preparation: Loading data from data/car_data.csv
+2025-11-04 13:24:52,518 [INFO] data_preparation: Dataset shape: (4340, 8)
+2025-11-04 13:24:52,527 [INFO] data_preparation: Processed feature matrix shape: (4340, 18)
+2025-11-04 13:24:52,528 [INFO] data_preparation: Train shape: (3038, 18), Val shape: (651, 18), Test shape: (651, 18)
+2025-11-04 13:24:52,530 [INFO] model: Creating model with input_dim=18, hidden_sizes=[128, 512, 512, 128, 64, 32]
+2025-11-04 13:24:52,537 [INFO] __main__: Starting training...
+2025-11-04 13:24:53,155 [INFO] __main__: Epoch [10/1000], Train Loss: 611333636096.0000, Train RMSE: 781878.2745, Val RMSE: 696717.6250,
+2025-11-04 13:24:53,714 [INFO] __main__: Epoch [20/1000], Train Loss: 611303227392.0000, Train RMSE: 781858.8283, Val RMSE: 696690.1875,
+2025-11-04 13:24:54,262 [INFO] __main__: Epoch [30/1000], Train Loss: 610911322112.0000, Train RMSE: 781608.1641, Val RMSE: 696354.3125,
+2025-11-04 13:24:54,874 [INFO] __main__: Epoch [40/1000], Train Loss: 607737675776.0000, Train RMSE: 779575.3176, Val RMSE: 693740.0625,
+2025-11-04 13:24:55,440 [INFO] __main__: Epoch [50/1000], Train Loss: 589394214912.0000, Train RMSE: 767720.1410, Val RMSE: 678914.5625,
+2025-11-04 13:24:56,031 [INFO] __main__: Epoch [60/1000], Train Loss: 511027281920.0000, Train RMSE: 714861.7222, Val RMSE: 614429.2500,
+2025-11-04 13:24:56,567 [INFO] __main__: Epoch [70/1000], Train Loss: 323378479104.0000, Train RMSE: 568663.7663, Val RMSE: 452453.2500,
+2025-11-04 13:24:57,158 [INFO] __main__: Epoch [80/1000], Train Loss: 297839394816.0000, Train RMSE: 545746.6398, Val RMSE: 444222.3750,
+2025-11-04 13:24:57,724 [INFO] __main__: Epoch [90/1000], Train Loss: 271339028480.0000, Train RMSE: 520902.1295, Val RMSE: 415858.2500,
+2025-11-04 13:24:58,298 [INFO] __main__: Epoch [100/1000], Train Loss: 249045762048.0000, Train RMSE: 499044.8497, Val RMSE: 400524.6875,
+2025-11-04 13:24:58,919 [INFO] __main__: Epoch [110/1000], Train Loss: 242119147520.0000, Train RMSE: 492056.0410, Val RMSE: 388974.5312,
+2025-11-04 13:24:59,499 [INFO] __main__: Epoch [120/1000], Train Loss: 229672878080.0000, Train RMSE: 479241.9828, Val RMSE: 377203.2500,
+2025-11-04 13:25:00,125 [INFO] __main__: Epoch [130/1000], Train Loss: 219807989760.0000, Train RMSE: 468836.8477, Val RMSE: 368068.1875,
+2025-11-04 13:25:00,763 [INFO] __main__: Epoch [140/1000], Train Loss: 209238900736.0000, Train RMSE: 457426.3883, Val RMSE: 357005.7188,
+2025-11-04 13:25:12,232 [INFO] __main__: Starting training pipeline
+2025-11-04 13:25:12,235 [INFO] data_preparation: Loading data from data/car_data.csv
+2025-11-04 13:25:36,727 [INFO] __main__: Starting training pipeline
+2025-11-04 13:25:36,730 [INFO] data_preparation: Loading data from data/car_data.csv
+2025-11-04 13:25:36,745 [INFO] data_preparation: Dataset shape: (4340, 8)
+2025-11-04 13:25:36,754 [INFO] data_preparation: Processed feature matrix shape: (4340, 18)
+2025-11-04 13:25:36,756 [INFO] data_preparation: Train shape: (3038, 18), Val shape: (651, 18), Test shape: (651, 18)
+2025-11-04 13:25:36,758 [INFO] model: Creating model with input_dim=18, hidden_sizes=[128, 512, 512, 128, 64, 32]
+2025-11-04 13:25:36,763 [INFO] __main__: Starting training...
+2025-11-04 13:25:37,335 [INFO] __main__: Epoch [10/1000], Train Loss: 611333636096.0000, Train RMSE: 781878.2745, Val RMSE: 696717.6250,
+2025-11-04 13:25:37,902 [INFO] __main__: Epoch [20/1000], Train Loss: 611303227392.0000, Train RMSE: 781858.8283, Val RMSE: 696690.1875,
+2025-11-04 13:25:38,435 [INFO] __main__: Epoch [30/1000], Train Loss: 610911322112.0000, Train RMSE: 781608.1641, Val RMSE: 696354.3125,
+2025-11-04 13:25:39,088 [INFO] __main__: Epoch [40/1000], Train Loss: 607737675776.0000, Train RMSE: 779575.3176, Val RMSE: 693740.0625,
