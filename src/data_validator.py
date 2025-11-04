@@ -4,7 +4,8 @@ Module for validate the car price dataset.
 import pandas as pd
 
 def validate_columns(df: pd.DataFrame, required_columns: list):
-    """Validate necessary columns exists.
+    """
+    Validate necessary columns exists.
 
     Args:
         df (pd.DataFrame): input data
@@ -18,7 +19,8 @@ def validate_columns(df: pd.DataFrame, required_columns: list):
         raise ValueError(f"Missing required columns: {missing}")
 
 def validate_types(df: pd.DataFrame, schema: dict):
-    """Validate necessary types of the columns.
+    """
+    Validate necessary types of the columns.
 
     Args:
         df (pd.DataFrame): input data
@@ -38,7 +40,8 @@ def validate_types(df: pd.DataFrame, schema: dict):
             raise ValueError(f"Column {col} must be non-negative")
 
 def validate_target(df: pd.DataFrame, target_col: str):
-    """Validate NaN and non-negative in the target column.
+    """
+    Validate NaN and non-negative in the target column.
 
     Args:
         df (pd.DataFrame): input data

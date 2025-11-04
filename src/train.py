@@ -6,6 +6,7 @@ import logging
 import sys
 from pathlib import Path
 
+import random
 import numpy as np
 import torch
 import yaml
@@ -16,6 +17,41 @@ from src.data_preparation import load_and_preprocess_data
 from src.config_loader import load_config
 from src.model import CarPriceMLP, CarPriceMLPConfig
 
+
+def seed_worker(worker_id: int):
+    """
+    Fix worker.
+
+    Args:
+        worker_id (int): worker id
+    """
+    worker_seed = torch.initial_seed() % 2**32
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+
+def set_seed(seed: int = 42) -> tuple:
+    """
+    Set global seed.
+
+    Args:
+        seed (int, optional): need seed. Defaults to 42.
+
+    Returns:
+        result (tuple): generator and seed_worker function
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+    g = torch.Generator()
+    g.manual_seed(seed)
+
+    return g, seed_worker
 
 def setup_logging(log_dir: str, level: str = "INFO"):
     """
@@ -51,8 +87,7 @@ def train(config_path: str, verbose=False):
     logger.info("Starting training pipeline")
 
     # --- Reproducibility ---
-    torch.manual_seed(config["training"]["random_seed"])
-    np.random.seed(config["training"]["random_seed"])
+    _, _ = set_seed(config["training"]["random_seed"])
 
     # --- Data Loading ---
     X_train, X_val, X_test, y_train, y_val, y_test, preprocessor = load_and_preprocess_data(config)

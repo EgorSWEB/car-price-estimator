@@ -5,7 +5,8 @@ import torch
 import numpy as np
 
 def postprocess_predictions(raw_outputs: torch.Tensor) -> np.ndarray:
-    """Converts the raw outputs of the model into final predictions.
+    """
+    Converts the raw outputs of the model into final predictions.
     For regression, we simply discard negative values (price ≥ 0).
 
     Args:
