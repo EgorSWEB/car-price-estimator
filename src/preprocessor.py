@@ -10,7 +10,8 @@ def create_preprocessor(
         numeric_features: List[str],
         categorical_features: List[str]
     ) -> ColumnTransformer:
-    """_summary_
+    """
+    Create preprocessor.
 
     Args:
         numeric_features (List[str]): list of num features
@@ -27,7 +28,8 @@ def create_preprocessor(
     )
 
 def add_car_age(df: pd.DataFrame, current_year: int = 2025) -> pd.DataFrame:
-    """Add the car age to the dataset.
+    """
+    Add the car age to the dataset.
 
     Args:
         df (pd.DataFrame): input dataframe

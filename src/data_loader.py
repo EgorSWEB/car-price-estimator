@@ -4,7 +4,8 @@ Module for loading the car price dataset.
 import pandas as pd
 
 def load_csv(path: str) -> pd.DataFrame:
-    """Load data from csv to DataFrame.
+    """
+    Load data from csv to DataFrame.
 
     Args:
         path (str): input path
