@@ -5110,3 +5110,9 @@
 2025-11-04 14:54:12,233 [INFO] src.model: Creating model with input_dim=10, hidden_sizes=None
 2025-11-04 14:54:12,234 [INFO] src.model: Creating model with input_dim=10, hidden_sizes=None
 2025-11-04 14:54:12,239 [INFO] __main__: Model saved to models\car_price_model
+2025-11-04 15:22:04,995 [INFO] __main__: Starting training pipeline
+2025-11-04 15:22:04,998 [INFO] src.data_preparation: Loading data from data/car_data.csv
+2025-11-04 15:22:05,005 [INFO] src.data_preparation: Dataset shape: (4340, 8)
+2025-11-04 15:22:05,018 [INFO] src.data_preparation: Data profile saved to models\car_price_model\data_profile.json
+2025-11-04 15:22:05,025 [INFO] src.data_preparation: Processed feature matrix shape: (4340, 18)
+2025-11-04 15:22:05,026 [INFO] src.data_preparation: Train shape: (3038, 18), Val shape: (651, 18), Test shape: (651, 18)
