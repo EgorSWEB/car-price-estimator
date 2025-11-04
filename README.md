@@ -58,5 +58,5 @@ pip install -r requirements.txt
 
 ### 🎓 Запуск обучения модели
 ```bash
-python src/train.py --config config/train_config.yaml --verbose
+python -m src.train --config config/train_config.yaml --verbose
 ```

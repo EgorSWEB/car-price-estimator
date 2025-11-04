@@ -13,6 +13,7 @@ from torch import nn
 import joblib
 
 from src.data_preparation import load_and_preprocess_data
+from src.config_loader import load_config
 from src.model import CarPriceMLP, CarPriceMLPConfig
 
 
@@ -43,8 +44,7 @@ def train(config_path: str, verbose=False):
         config_path (str): Path to the YAML configuration file.
         verbose (bool): Whether to log more details.
     """
-    with open(config_path, "r", encoding="utf-8") as f:
-        config = yaml.safe_load(f)
+    config = load_config(config_path)
 
     setup_logging(config["logging"]["log_dir"], config["logging"]["level"])
     logger = logging.getLogger(__name__)
@@ -55,7 +55,6 @@ def train(config_path: str, verbose=False):
     np.random.seed(config["training"]["random_seed"])
 
     # --- Data Loading ---
-    # pylint: disable=invalid-name
     X_train, X_val, X_test, y_train, y_val, y_test, preprocessor = load_and_preprocess_data(config)
     input_dim = X_train.shape[1]
 

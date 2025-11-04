@@ -12,6 +12,10 @@ from src.data_validator import (
     validate_types,
     validate_target
 )
+from src.config_loader import (
+    get_required_columns, 
+    get_data_schema
+)
 from src.preprocessor import create_preprocessor, add_car_age
 
 def load_and_preprocess_data(config):
@@ -29,13 +33,9 @@ def load_and_preprocess_data(config):
 
     df = load_csv(config["data"]["path"])
 
-    check_schema = {feature: "numeric" for feature in config["data"]["features"]["numeric"]}
-    check_schema.update(
-        {feature: "categorical" for feature in config["data"]["features"]["categorical"]}
-    )
-    check_schema[config["data"]["target_column"]] = "non-negative"
+    check_schema = get_data_schema(config)
 
-    validate_columns(df, list(check_schema.keys()))
+    validate_columns(df, get_required_columns(config))
     validate_types(df, check_schema)
     validate_target(df, config["data"]["target_column"])
 
