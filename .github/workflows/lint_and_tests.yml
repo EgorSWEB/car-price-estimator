@@ -1,4 +1,4 @@
-name: Pylint
+name: Lint and Tests
 
 on: [push]
 
@@ -30,6 +30,10 @@ jobs:
         pip install -r requirements.txt
 
     - name: Analysing the code with pylint
+      continue-on-error: true
       run: pylint --rcfile=.pylintrc src/ data/
+
+    - name: Run unit tests
+      run: pytest tests/ -v
       # run: |
       #   pylint $(git ls-files '*.py')

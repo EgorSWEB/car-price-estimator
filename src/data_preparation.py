@@ -4,11 +4,15 @@ Module for loading and preprocessing the car price dataset.
 import logging
 
 import numpy as np
-import pandas as pd
-from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from data_loader import load_csv
+from data_validator import (
+    validate_columns,
+    validate_types,
+    validate_target
+)
+from preprocessor import create_preprocessor, add_car_age
 
 def load_and_preprocess_data(config):
     """
@@ -23,13 +27,22 @@ def load_and_preprocess_data(config):
     logger = logging.getLogger(__name__)
     logger.info("Loading data from %s", config["data"]["path"])
 
-    df = pd.read_csv(config["data"]["path"])
+    df = load_csv(config["data"]["path"])
+
+    check_schema = {feature: "numeric" for feature in config["data"]["features"]["numeric"]}
+    check_schema.update(
+        {feature: "categorical" for feature in config["data"]["features"]["categorical"]}
+    )
+    check_schema[config["data"]["target_column"]] = "non-negative"
+
+    validate_columns(df, list(check_schema.keys()))
+    validate_types(df, check_schema)
+    validate_target(df, config["data"]["target_column"])
+
     logger.info("Dataset shape: %s", df.shape)
 
     # Feature engineering
-    df = df.copy()
-    current_year = 2025
-    df["car_age"] = current_year - df["year"]
+    df = add_car_age(df, 2025)
     numeric_features = config["data"]["features"]["numeric"] + ["car_age"]
     categorical_features = config["data"]["features"]["categorical"]
 
@@ -38,12 +51,7 @@ def load_and_preprocess_data(config):
     X = df[numeric_features + categorical_features].copy()
 
     # Preprocessing pipeline
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", StandardScaler(), numeric_features),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features),
-        ]
-    )
+    preprocessor = create_preprocessor(numeric_features, categorical_features)
 
     X_processed = preprocessor.fit_transform(X)
     logger.info("Processed feature matrix shape: %s", X_processed.shape)

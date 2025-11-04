@@ -3,7 +3,9 @@ Module defining the neural network model for car price prediction.
 """
 import logging
 
+from typing import Dict, Any
 from torch import nn
+from torch import Tensor
 from transformers import PreTrainedModel, PretrainedConfig
 
 
@@ -53,7 +55,18 @@ class CarPriceMLP(PreTrainedModel):
         layers.append(nn.Linear(prev_size, config.output_dim))
         self.network = nn.Sequential(*layers)
 
-    def forward(self, x, labels=None):
+    def forward(self, x: Tensor, labels: Tensor = None) -> Dict[str, Any]:
+        """
+        Forward pass.
+
+        Args:
+            x (Tensor): input data
+            labels (Tensor, optional): target. Defaults to None.
+
+        Returns:
+            result (Dict[str, Any]): dictonary with "loss" if the target was given 
+            else only "logits" exists.
+        """
         outputs = self.network(x).squeeze(-1)
         loss = None
         if labels is not None:

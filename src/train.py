@@ -13,10 +13,11 @@ from torch import nn
 import joblib
 
 from data_preparation import load_and_preprocess_data
+
 from model import CarPriceMLP, CarPriceMLPConfig
 
 
-def setup_logging(log_dir, level="INFO"):
+def setup_logging(log_dir: str, level: str = "INFO"):
     """
     Sets up the logging configuration.
 
@@ -35,7 +36,7 @@ def setup_logging(log_dir, level="INFO"):
     )
 
 
-def train(config_path, verbose=False):
+def train(config_path: str, verbose=False):
     """
     Main training function.
 
@@ -97,7 +98,7 @@ def train(config_path, verbose=False):
                 val_preds = model(X_val_t)['logits']
                 val_mse = criterion(val_preds, y_val_t)
                 val_rmse = torch.sqrt(val_mse).item()
-            
+
             logger.info(
                 "Epoch [%d/%d], Train Loss: %.4f, Train RMSE: %.4f, Val RMSE: %.4f,",
                 epoch + 1,
