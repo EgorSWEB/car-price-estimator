@@ -1,7 +1,7 @@
 """Generating basic statistics based on data."""
 import json
-import pandas as pd
 from pathlib import Path
+import pandas as pd
 
 
 def profile_data(df: pd.DataFrame, output_path: str):
