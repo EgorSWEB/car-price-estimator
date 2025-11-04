@@ -13,7 +13,7 @@ from src.data_validator import (
     validate_target
 )
 from src.config_loader import (
-    get_required_columns, 
+    get_required_columns,
     get_data_schema
 )
 from src.preprocessor import create_preprocessor, add_car_age

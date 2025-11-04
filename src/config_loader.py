@@ -1,6 +1,5 @@
 """Utilities for working with the configuration."""
 import yaml
-from pathlib import Path
 
 
 def load_config(config_path: str) -> dict:
